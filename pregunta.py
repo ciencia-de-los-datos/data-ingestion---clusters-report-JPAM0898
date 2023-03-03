@@ -30,6 +30,5 @@ def ingest_data():
     l2 = []
     [l2.append(i.strip()) for i in pal_clave[:-1].split('.')]
     df2['principales_palabras_clave'] = pd.concat([pd.Series(i) for i in l2]).reset_index(drop=True)
-    df2['principales_palabras_clave'] = df2['principales_palabras_clave'].str.replace(' ,', ',').replace(',',', ').str.replace('   ',' ').str.replace('  ',' ').str.strip()
-    df2['principales_palabras_clave'] = df2['principales_palabras_clave'].str.strip('\n').astype(str)
+    df2['principales_palabras_clave'] = df2['principales_palabras_clave'].str.replace(' ,', ',').replace(',',', ').str.replace('   ',' ').str.replace('  ',' ').str.strip('\n').astype(str).str.replace('  ', ' ')
     return df2
