@@ -21,45 +21,14 @@ def ingest_data():
     df2 = pd.DataFrame()
     df2['cluster'] = df[0]
     df2['cantidad_de_palabras_clave'] = df[1]
-    df2['porcentaje_de_palabras_clave'] = df[2]
+    df2['porcentaje_de_palabras_clave'] = df[2].str.replace(',', '.')
     df2.dropna(inplace=True)
-    df2.reset_index( inplace=True)  
+    df2.reset_index(drop=True,inplace=True)
     df2['cluster'] = df2['cluster'].str.strip()
     df2['cantidad_de_palabras_clave'] = df2['cantidad_de_palabras_clave'].str.strip()
     df2['porcentaje_de_palabras_clave'] = df2['porcentaje_de_palabras_clave'].str.strip()
            
         
-    
-    
-    
-    
-    
 
-
-
-    
-
-
-
-    
-    
- 
-
-
-
-
-
-
-    
-
-                
-    
-
-
-
-
-
-
-    
     
     return df2
