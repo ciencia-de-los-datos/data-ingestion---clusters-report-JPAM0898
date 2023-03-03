@@ -26,9 +26,10 @@ def ingest_data():
     df2['porcentaje_de_palabras_clave'] = df2['porcentaje_de_palabras_clave'].str.strip().astype(float)
     l = []
     [l.append(i) for i in df[3]]
-    pal_clave = ''.join(l).replace('controlmulti', 'control. multi')
+    pal_clave = ' '.join(l).replace('control multi', 'control.multi')
     l2 = []
-    [l2.append(i) for i in re.split('\.', pal_clave[:-1])]
-    df2['principal_palabra_clave'] = pd.concat([pd.Series(i) for i in l2]).reset_index(drop=True)
-    df2['principal_palabra_clave'] = df2['principal_palabra_clave'].str.strip().str.replace('  ', '')
+    [l2.append(i.strip()) for i in pal_clave[:-1].split('.')]
+    df2['principales_palabras_clave'] = pd.concat([pd.Series(i) for i in l2]).reset_index(drop=True)
+    df2['principales_palabras_clave'] = df2['principales_palabras_clave'].str.replace(' ,', ',').replace(',',', ').str.replace('   ',' ').str.replace('  ',' ').str.strip()
+    df2['principales_palabras_clave'] = df2['principales_palabras_clave'].str.strip('\n').astype(str)
     return df2
