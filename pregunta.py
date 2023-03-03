@@ -12,9 +12,6 @@ import numpy as np
 
 
 def ingest_data():
-    #df = pd.read_csv('clusters_report.txt', sep='\t', header=None, names=['original'])
-    # df['original'] = df['original'].str.replace('cluster', '').replace('Cantidad de', '').replace('Porcentaje de', '').replace('Principales palabras clave', '').replace('palabras clave', '').str.replace('-', '')
-
     df = pd.read_fwf("clusters_report.txt", colspecs=[(3,5),(9,14),(25,29),(40,119)], header=None)
     df.drop(df.index[:3], inplace=True)
     df.reset_index(drop=True, inplace=True)
@@ -27,8 +24,11 @@ def ingest_data():
     df2['cluster'] = df2['cluster'].str.strip().astype(int)
     df2['cantidad_de_palabras_clave'] = df2['cantidad_de_palabras_clave'].str.strip().astype(int)
     df2['porcentaje_de_palabras_clave'] = df2['porcentaje_de_palabras_clave'].str.strip().astype(float)
-           
-        
-
-    
+    l = []
+    [l.append(i) for i in df[3]]
+    pal_clave = ''.join(l).replace('controlmulti', 'control. multi')
+    l2 = []
+    [l2.append(i) for i in re.split('\.', pal_clave[:-1])]
+    df2['principal_palabra_clave'] = pd.concat([pd.Series(i) for i in l2]).reset_index(drop=True)
+    df2['principal_palabra_clave'] = df2['principal_palabra_clave'].str.strip().str.replace('  ', '')
     return df2
