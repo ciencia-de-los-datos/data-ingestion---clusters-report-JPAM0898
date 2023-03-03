@@ -7,9 +7,6 @@ Construya un dataframe de Pandas a partir del archivo 'originals_report.txt', te
 
 """
 import pandas as pd
-import re
-import numpy as np
-
 
 def ingest_data():
     df = pd.read_fwf("clusters_report.txt", colspecs=[(3,5),(9,14),(25,29),(40,119)], header=None)
@@ -30,5 +27,5 @@ def ingest_data():
     l2 = []
     [l2.append(i.strip()) for i in pal_clave[:-1].split('.')]
     df2['principales_palabras_clave'] = pd.concat([pd.Series(i) for i in l2]).reset_index(drop=True)
-    df2['principales_palabras_clave'] = df2['principales_palabras_clave'].str.replace(' ,', ',').replace(',',', ').str.replace('   ',' ').str.replace('  ',' ').str.strip('\n').astype(str).str.replace('  ', ' ')
+    df2['principales_palabras_clave'] = df2['principales_palabras_clave'].str.replace(' ,', ',').replace(',',', ').str.replace('   ',' ').str.replace('  ',' ').str.strip('\n').str.replace('  ', ' ')
     return df2
